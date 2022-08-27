@@ -1,80 +1,76 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
-// Inputs/prompts
-var passwordLength;
-var symbols;
-var numbers;
-var uppercase;
-var lowercase;
+// Various Arrays 
+var number = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+var specialChar = ["!", "%", "&", ",", "*", "+", "-", ".", "/", "<", ">", "?","~"];
+var alphaLower = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+var alphaUpper = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 
-//Password character criteria
-// Password character criteria
-var sym = ["!", "@", "#", "$", "%", "^", "&", "*", "=", "-", "_"];
-var num = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
-var upper = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-var lower = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+// Variable Declaration 
+var confirmLength = "";
+var confirmSpecialCharacter;
+var confirmNumericCharacter;
+var confirmUpperCase;
+var confirmLowerCase;
 
+// Prompt to confirm how many characters the user would like in their password
 function generatePassword() {
+  var confirmLength = (prompt("How many characters would you like your password to contain?"));
 
-    let password = "";
-    var passwordChar = "";
-    // First prompt asking for users password length
-    while (true) {
-      passwordLength = parseInt(prompt("Choose the length of your password. This needs to be between 8 - 128"));
-      // If user chooses a number equal to or above 8 and equal to or below 128, move on
-      if (passwordLength >= 8 && passwordLength <= 128) {
-        break;
-      }
-      // Else, return this alert and loop back to the start so they can choose a valid number
-      alert("Please select a number between 8 - 128");
+  // Loop if answer is outside the parameters 
+  while(confirmLength <= 7 || confirmLength >= 51) {
+      alert("Password length must be between 8-50 characters Try again");
+      var confirmLength = (prompt("How many characters would you like your password to contain?"));
+      } 
+
+      // Repeat back how many charactes the user will have  
+      alert(`Your password will have ${confirmLength} characters`);
+
+    // Determine parameters of password 
+    var confirmSpecialCharacter = confirm("Click OK to confirm if you would like to include special characters");
+    var confirmNumericCharacter = confirm("Click OK to confirm if you would like to include numeric characters");    
+    var confirmLowerCase = confirm("Click OK to confirm if you would like to include lowercase characters");
+    var confirmUpperCase = confirm("Click OK to confirm if you would like to include uppercase characters");
+      // Loop if answer is outside the parameters 
+      while(confirmUpperCase === false && confirmLowerCase === false && confirmSpecialCharacter === false && confirmNumericCharacter === false) {
+        alert("You must choose at least one parameter");
+        var confirmSpecialCharacter = confirm("Click OK to confirm if you would like to include special characters");
+        var confirmNumericCharacter = confirm("Click OK to confirm if you would like to include numeric characters");    
+        var confirmLowerCase = confirm("Click OK to confirm if you would like to include lowercase characters");
+        var confirmUpperCase = confirm("Click OK to confirm if you would like to include uppercase characters");   
+    } 
+
+      // Assign an action to the password parameters NEED TO FIX THIS
+      var passwordCharacters = []
+      
+    if (confirmSpecialCharacter) {
+      passwordCharacters = passwordCharacters.concat(specialChar)
     }
-    // Once user has chosen a valid number, they will choose the rest of their criteria
-    symbols = confirm("Select 'OK' if you would like to include special characters");
-    numbers = confirm("Select 'OK' if you would like to include numbers");
-    uppercase = confirm("Select 'OK' if you would like to include uppercase letters");
-    lowercase = confirm("Select 'OK' if you would like to include lowercase letters");
-  
-    // Function to concat all possible true options and pass them to the passwordChar variable
-    if (symbols) {
-      passwordChar = sym;
-    } else if (numbers) {
-      passwordChar = num;
-    } else if (uppercase) {
-      passwordChar = upper;
-    } else if (lowercase) {
-      passwordChar = lower;
-    } else if (symbols && numbers) {
-      passwordChar = sym += num;
-    } else if (symbols && uppercase) {
-      passwordChar = sym += upper;
-    } else if (symbols && lowercase) {
-      passwordChar = sym += lower;
-    } else if (numbers && uppercase) {
-      passwordChar = num += upper;
-    } else if (numbers && lowercase) {
-      passwordChar = num += lower;
-    } else if (uppercase && lowercase) {
-      passwordChar = upper += lower;
-    } else if (symbols && numbers && uppercase) {
-      passwordChar = sym += num += upper;
-    } else if (symbols && numbers && lowercase) {
-      passwordChar = sym += num += lower;
-    } else if (symbols && uppercase && lowercase) {
-      passwordChar = sym += upper += lower;
-    } else if (lowercase && numbers && uppercase) {
-      passwordChar = lower += num += upper;
-    } else if (symbols && numbers && uppercase && lowercase) {
-      passwordChar = sym += num += upper += lower;
-    } else if (!symbols && !numbers && !uppercase && !lowercase)
-      alert("You must select at least one criterie, please start again!")
 
-      // For loop to select random characters from the criteria strings
-      for (let i = 0; i < passwordLength; i++) {password += passwordChar[Math.floor(Math.random() * passwordChar.length)]
+    if (confirmNumericCharacter) {
+      passwordCharacters = passwordCharacters.concat(number)
+    }
+      
+    if (confirmLowerCase) {
+      passwordCharacters = passwordCharacters.concat(alphaLower)
+    }
+
+    if (confirmUpperCase) {
+      passwordCharacters = passwordCharacters.concat(alphaUpper)
+    }
+
+      console.log(passwordCharacters)
+
+      // Empty string to be filled based on for loop selecting random characters from the array
+      var randomPassword = ""
+      
+      for (var i = 0; i < confirmLength; i++) {
+        randomPassword = randomPassword + passwordCharacters[Math.floor(Math.random() * passwordCharacters.length)];
+        console.log(randomPassword)
       }
-    
-      return (password);
-  }
+      return randomPassword;
+}
 
 // Write password to the #password input
 function writePassword() {
@@ -82,7 +78,6 @@ function writePassword() {
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
-
 }
 
 // Add event listener to generate button
