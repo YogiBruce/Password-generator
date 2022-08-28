@@ -21,9 +21,9 @@ function generatePassword() {
   // Loop if answer is outside the parameters 
   while(confirmLength <= 7 || confirmLength >= 51) {
       alert("Password length must be between 8-50 characters Try again");
+      
       var confirmLength = (prompt("How many characters would you like your password to contain?"));
-      } 
-
+      }  
       // Repeat back how many charactes the user will have  
       alert(`Your password will have ${confirmLength} characters`);
 
@@ -41,7 +41,7 @@ function generatePassword() {
         var confirmUpperCase = confirm("Click OK to confirm if you would like to include uppercase characters");   
     } 
 
-      // Assign an action to the password parameters NEED TO FIX THIS
+      // Assign an action to the password parameters
       var passwordCharacters = []
       
     if (confirmSpecialCharacter) {
