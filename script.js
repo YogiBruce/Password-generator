@@ -1,8 +1,6 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
-// var generateBtn = document.querySelector("#generate");
-
 // Various arrays of parameters
 var number = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 var specialChar = ["!","#", "$", "%", "&", "*", ",", "-", ".", "/", "<", ">", "?", "~"];
